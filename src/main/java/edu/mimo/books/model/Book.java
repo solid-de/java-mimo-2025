@@ -1,58 +1,35 @@
 package edu.mimo.books.model;
 
-public class Book implements Product{
+public class Book {
 
-    private int id;
     private String isbn;
     private String title;
-    private String author;
-    private int pubYear;
     private int price;
+    private int pages;
+    private String author;
 
-    public Book() {}
+    /** LLM assisted data:
+     Book book1 = new Book("978-0-374-52797-9", "The Brothers Karamazov", 1899, 824, "Fyodor Dostoevsky");
+     Book book2 = new Book("978-0-14-303943-3", "The Grapes of Wrath", 1699, 464, "John Steinbeck");
+     Book book3 = new Book("978-0-14-044912-9", "Madame Bovary", 1549, 368, "Gustave Flaubert");
+     Book book4 = new Book("978-0-14-143974-8", "Mansfield Park", 1449, 560, "Jane Austen");
+     Book book5 = new Book("978-0-385-47454-2", "Things Fall Apart", 1399, 209, "Chinua Achebe");
 
-    public Book(int id, String isbn, String title, String author, int pubYear, int price) {
-        this.id = id;
+     Book book6 = new Book("978-0-14-044568-8", "Das Kapital", 2299, 1152, "Karl Marx");
+     Book book7 = new Book("978-0-226-77662-8", "The Wealth of Nations", 1999, 976, "Adam Smith");
+     Book book8 = new Book("978-0-14-043205-3", "The Origin of Species", 1799, 703, "Charles Darwin");
+
+     Book book9 = new Book("978-0-201-83595-3", "The Mythical Man-Month", 4599, 336, "Frederick P. Brooks Jr.");
+     Book book10 = new Book("978-0-262-03384-8", "Introduction to Algorithms", 12999, 1312, "Thomas H. Cormen");
+     Book book11 = new Book("978-0-201-89683-1", "The Art of Computer Programming Volume 1", 8999, 672, "Donald E. Knuth");
+
+     */
+    public Book(String isbn, String title, int price, int pages, String author) {
         this.isbn = isbn;
         this.title = title;
-        this.author = author;
-        this.pubYear = pubYear;
         this.price = price;
-    }
-
-    @Override
-    public String code() {
-        return isbn;
-    }
-
-    @Override
-    public String label() {
-        return title;
-    }
-
-    @Override
-    public String description() {
-        return "Book: " + title +
-                ", Author: " + author +
-                ", Year: " + pubYear;
-    }
-
-    @Override
-    public int price() {
-        return price;
-    }
-
-    @Override
-    public Category category() {
-        return Category.BOOK;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.pages = pages;
+        this.author = author;
     }
 
     public String getIsbn() {
@@ -79,19 +56,19 @@ public class Book implements Product{
         this.author = author;
     }
 
-    public int getPubYear() {
-        return pubYear;
-    }
-
-    public void setPubYear(int pubYear) {
-        this.pubYear = pubYear;
-    }
-
     public int getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
     }
 }
