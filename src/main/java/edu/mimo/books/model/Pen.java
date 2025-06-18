@@ -1,6 +1,6 @@
 package edu.mimo.books.model;
 
-public class Pen {
+public class Pen implements Displayable, HavingPrice {
 
     private String sku;
     private String label;
@@ -66,10 +66,15 @@ public class Pen {
     }
 
     public String getLabel() {
-        return label;
+        return "Pen: " + label;
     }
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    @Override
+    public String display() {
+        return this.getSku() + " - " + this.getLabel();
     }
 }

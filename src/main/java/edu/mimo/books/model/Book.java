@@ -1,6 +1,6 @@
 package edu.mimo.books.model;
 
-public class Book {
+public class Book implements Displayable, HavingPrice {
 
     private String isbn;
     private String title;
@@ -70,5 +70,10 @@ public class Book {
 
     public void setPages(int pages) {
         this.pages = pages;
+    }
+
+    @Override
+    public String display() {
+        return this.isbn + " - " + this.title;
     }
 }

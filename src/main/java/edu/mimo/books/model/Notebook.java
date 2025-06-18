@@ -1,6 +1,6 @@
 package edu.mimo.books.model;
 
-public class Notebook {
+public class Notebook implements Displayable, HavingPrice {
 
     private String sku;
     private String label;
@@ -81,5 +81,11 @@ public class Notebook {
 
     public void setPages(int pages) {
         this.pages = pages;
+    }
+
+
+    @Override
+    public String display() {
+        return this.getSku() + " - " + this.getLabel();
     }
 }
