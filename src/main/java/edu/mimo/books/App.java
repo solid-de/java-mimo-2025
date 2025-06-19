@@ -1,26 +1,37 @@
 package edu.mimo.books;
 
 import java.util.List;
+import java.util.Optional;
 
-import edu.mimo.books.model.Displayable;
-import edu.mimo.books.repository.ProductRepository;
-import edu.mimo.books.repository.ProductRepositoryImpl;
+import edu.mimo.books.model.Animal;
+import edu.mimo.books.model.EtreVivant;
+import edu.mimo.books.repository.InMemoryJardinRepository;
+import edu.mimo.books.repository.JardinRepository;
 
 public class App {
 
     public static void main(String[] args) {
 
-        ProductRepository productRepository = new ProductRepositoryImpl();
-
-        List<Displayable> products = productRepository.allProductsForDisplay();
         
-        for (Displayable product : products) {
-            System.out.println(product.display());
+        JardinRepository jardinRepository = new InMemoryJardinRepository();
+
+        List<EtreVivant> lesEtresVivants = jardinRepository.population();
+
+        for (EtreVivant etreVivant : lesEtresVivants) {
+            System.out.println("Espèce " + etreVivant.getEspece() 
+            + ", de variété: " + etreVivant.getVariete()
+            + ", vivant en: " + etreVivant.getOrigine().getPays()
+            + " dans un climat: " + etreVivant.getOrigine().getClimat());
         }
 
+        lesEtresVivants.forEach(etreVivant -> {
+            System.out.println("Espèce " + etreVivant.getEspece() 
+            + ", de variété: " + etreVivant.getVariete()
+            + ", vivant en: " + etreVivant.getOrigine().getPays()
+            + " dans un climat: " + etreVivant.getOrigine().getClimat());
+        });
 
-
-
+        Optional<Animal> ficheAnimal = jardinRepository.ficheAnimal("test-not-found");
 
     }
 
