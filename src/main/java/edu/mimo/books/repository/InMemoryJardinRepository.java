@@ -1,5 +1,6 @@
 package edu.mimo.books.repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,61 @@ public class InMemoryJardinRepository implements JardinRepository {
 
     @Override
     public List<EtreVivant> population() {
+        
+        List<EtreVivant> etresVivants = new ArrayList<>();
+        tousLesAnimaux().forEach(animal -> {
+            etresVivants.add(animal);
+        });
+        for(Fleur fleur: toutesLesFleurs()) {
+            etresVivants.add(fleur);
+        }
+        return etresVivants;
+    }
+
+    @Override
+    public List<EtreVivant> rechercher(String espece, String variete, Origine origine) {
+        return population().stream()
+        .filter(etreVivant -> {
+            if(espece != null && !espece.equalsIgnoreCase(etreVivant.getEspece())) {
+                return false;
+            }
+            if(variete != null && !variete.equalsIgnoreCase(etreVivant.getVariete())) {
+                return false;
+            }
+            if(origine == null) {
+                return true;
+            }
+            if(origine.getClimat() != null && !origine.getClimat().equals(etreVivant.getOrigine().getClimat())) {
+                return false;
+            }
+            List<String> paysDeRecherche = origine.getPays();
+            for (String pays: paysDeRecherche) {
+                if(etreVivant.getOrigine().getPays().contains(pays)) {
+                    return true;
+                }
+            }
+            return false;
+        }).toList();
+    }
+
+    @Override
+    public Optional<Animal> ficheAnimal(String id) {
+        for (Animal animal : tousLesAnimaux()) {
+            if(id.equals(animal.getId())) {
+                return Optional.of(animal);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Fleur> ficheFleur(String id) {
+        return toutesLesFleurs().stream()
+        .filter(fleur -> id.equals(fleur.getId()))
+        .findFirst();
+    }
+
+    private List<Animal> tousLesAnimaux() {
         // Animal 1 - Lion
         Animal lion = new Animal();
         lion.setId("A001");
@@ -58,6 +114,11 @@ public class InMemoryJardinRepository implements JardinRepository {
         perroquet.setOrigine(new Origine(Arrays.asList("Brésil", "Pérou", "Colombie"), Climat.TROPICAL));
         perroquet.setVertebre(true);
         perroquet.setNbrPattes(2);
+
+        return List.of(lion, aigle, pieuvre, perroquet);
+    }
+
+    private List<Fleur> toutesLesFleurs() {
 
         // Fleur 1 - Rose rouge
         Fleur rose = new Fleur();
@@ -135,29 +196,11 @@ public class InMemoryJardinRepository implements JardinRepository {
         orchidee.setOrigine(new Origine(Arrays.asList("Thaïlande", "Malaisie", "Philippines"), Climat.TROPICAL));
         orchidee.setCouleur(Couleur.BLANC);
         orchidee.setNbrPetales(5);
-
-        List<EtreVivant> etresVivants = List.of(lion, aigle, pieuvre, perroquet,
+        
+        return List.of(
             rose, tournesol, lavande, tulipe, lys, souci, orchidee
         );
-        return etresVivants;
-    }
 
-    @Override
-    public List<EtreVivant> rechercher(String espece, String variete, Origine origine) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'rechercher'");
-    }
-
-    @Override
-    public Optional<Animal> ficheAnimal(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ficheAnimal'");
-    }
-
-    @Override
-    public Optional<Fleur> ficheFleur(String id) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'ficheFleur'");
     }
     
 }
