@@ -2,47 +2,49 @@ package edu.mimo.books;
 
 import java.util.List;
 
+import edu.mimo.books.model.Admin;
+import edu.mimo.books.model.Constants;
+import edu.mimo.books.model.Person;
+import edu.mimo.books.model.Role;
+import edu.mimo.books.model.Staff;
+import edu.mimo.books.model.Student;
+import edu.mimo.books.model.Teacher;
+
 public class App {
 
     public static void main(String[] args) {
 
-        YOUR_CODE_HERE personRepository = new YOUR_CODE_HERE();
-
-        List<YOUR_CODE_HERE> persons = personRepository.YOUR_CODE_HERE;
-
-        for(YOUR_CODE_HERE) {
-            System.out.println(YOUR_CODE_HERE);
-        }
-        /*Doit afficher exactement ces 6 lignes:
-        --------
-        My name is Sarah Johnson, my role is "teacher".  
-        My name is Michael Brown, my role is "admin".  
-        My name is Emma Davis, my role is "student".  
-        My name is Liam Wilson, my role is "student".  
-        --------
-        */
-
-        List<YOUR_CODE_HERE> staff = personRepository.YOUR_CODE_HERE;
-
-        for(YOUR_CODE_HERE) {
-            if(YOUR_CODE_HERE) {
-                int bonus = YOUR_CODE_HERE;
-                System.out.println(YOUR_CODE_HERE);
-            } else if (YOUR_CODE_HERE) {
-                int bonus = YOUR_CODE_HERE;
-                System.out.println(YOUR_CODE_HERE);
+        allPersons().forEach(person -> {
+            System.out.println("My role is: '" + person.getRole().getLabel() + "'");
+        });
+        
+        allStaff().forEach(staff -> {
+            if(Role.TEACHER_ROLE.equals(staff.getRole())){
+                System.out.println("Bonus pour teacher");
+            } 
+            if(Role.ADMIN_ROLE.equals(staff.getRole())) {
+                System.out.println("Bonus pour admin");
             }
-        }
+        });
 
-        /*Doit afficher exactement ces 4 lignes:
-        --------
-        Teacher Sarah Johnson will get a bonus = 600.  
-        Admin Michael Brown will get a bonus = 400. 
-        --------
-        */
 
 
     }
 
+
+    public static List<Staff> allStaff() {
+        Admin admin = new Admin("Michael", "Brown", 2000);
+        Teacher teacher = new Teacher("Sarah", "Johnson", 2400);
+        return List.of(admin, teacher);
+    }
+
+    public static List<Person> allPersons() {
+        Admin admin = new Admin("Michael", "Brown", 2000);
+        Teacher teacher = new Teacher("Sarah", "Johnson", 2400);
+        Student student1 = new Student("Emma", "Davis");
+        Student student2 = new Student("Liam", "Wilson");
+
+        return List.of(admin, teacher, student1, student2);
+    }
 
 }
