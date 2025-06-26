@@ -5,7 +5,11 @@ public class Person {
     private String lastName;
     private Role role;
 
-    //getters & setters
+    public Person(String firstName, String lastName, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+    }
 
     public String getFirstName() {
         return firstName;
