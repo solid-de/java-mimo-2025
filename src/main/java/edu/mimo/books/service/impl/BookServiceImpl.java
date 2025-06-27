@@ -7,6 +7,7 @@ import edu.mimo.books.dto.BookCreationDto;
 import edu.mimo.books.dto.BookDto;
 import edu.mimo.books.entity.Book;
 import edu.mimo.books.mapper.BookMapper;
+import edu.mimo.books.repository.AuthorRepository;
 import edu.mimo.books.repository.BookRepository;
 import edu.mimo.books.service.BookService;
 
@@ -17,10 +18,14 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
     private final BookMapper bookMapper;
 
-    public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper) {
+    public BookServiceImpl(BookRepository bookRepository, 
+                           BookMapper bookMapper, 
+                           AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
         this.bookMapper = bookMapper;
     }
 
@@ -36,21 +41,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<BookDto> getBookById(Long id) {
+    public Optional<BookDto> getBookById(Integer id) {
         return bookRepository.findById(id)
                     .map(entity -> bookMapper.toDto(entity));
     }
 
     @Override
-    @Transactional
-    public BookDto createBook(BookCreationDto bookCreateDto) {
-        Book book = bookMapper.toEntity(bookCreateDto);
-        Book saved = bookRepository.save(book);
-        return bookMapper.toDto(saved);
+    public Optional<BookDto> createBook(BookCreationDto bookCreateDto) {
+        return authorRepository.findById(bookCreateDto.getAuthorId())
+        .map(author -> {
+            Book book = bookMapper.toEntity(bookCreateDto);
+            book.setAuthor(author);
+            Book saved = bookRepository.save(book);
+            return bookMapper.toDto(saved);
+        });
     }
 
     @Override
-    public Optional<BookDto> updateBook(Long id, BookCreationDto bookCreateDto) {
+    public Optional<BookDto> updateBook(Integer id, BookCreationDto bookCreateDto) {
         return bookRepository.findById(id)
         .map(existing -> {
             Book toUpdate = bookMapper.toEntity(bookCreateDto);
@@ -61,7 +69,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean deleteBook(Long id) {
+    public boolean deleteBook(Integer id) {
         if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
             return true;

@@ -9,9 +9,9 @@ import edu.mimo.books.dto.BookDto;
 
 public interface BookService {
     List<BookDto> getAllBooks();
-    Optional<BookDto> getBookById(Long id);
-    BookDto createBook(BookCreationDto bookCreateDto);
-    Optional<BookDto> updateBook(Long id, BookCreationDto bookCreateDto);
-    boolean deleteBook(Long id);
+    Optional<BookDto> getBookById(Integer id);
+    Optional<BookDto> createBook(BookCreationDto bookCreateDto);
+    Optional<BookDto> updateBook(Integer id, BookCreationDto bookCreateDto);
+    boolean deleteBook(Integer id);
     Map<String, List<BookDto>> groupBooksByLanguage();
 } 

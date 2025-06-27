@@ -8,7 +8,7 @@ public class Book implements Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String isbn;
     private String title;
@@ -23,11 +23,11 @@ public class Book implements Product {
 
     public Book() {}
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -89,4 +89,14 @@ public class Book implements Product {
     public int price() {
         return getPrice();
     }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    
 }

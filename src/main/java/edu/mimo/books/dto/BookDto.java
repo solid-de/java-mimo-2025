@@ -1,18 +1,18 @@
 package edu.mimo.books.dto;
 
 public class BookDto {
-    private Long id;
+    private Integer id;
     private String isbn;
     private String title;
-    private String authorName;
+    private AuthorSummaryDto author;
     private String country;
     private String originalLanguage;
     private Integer year;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getIsbn() {
@@ -27,12 +27,7 @@ public class BookDto {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getAuthorName() {
-        return authorName;
-    }
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
+    
     public String getCountry() {
         return country;
     }
@@ -50,5 +45,11 @@ public class BookDto {
     }
     public void setYear(Integer year) {
         this.year = year;
+    }
+    public AuthorSummaryDto getAuthor() {
+        return author;
+    }
+    public void setAuthor(AuthorSummaryDto author) {
+        this.author = author;
     }
 } 

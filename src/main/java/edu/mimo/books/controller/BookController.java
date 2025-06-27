@@ -24,26 +24,28 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookDto> getBookById(@PathVariable Integer id) {
         return bookService.getBookById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody BookCreationDto bookCreateDto) {
-        return bookService.createBook(bookCreateDto);
+    public ResponseEntity<BookDto> createBook(@RequestBody BookCreationDto bookCreateDto) {
+        return bookService.createBook(bookCreateDto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @RequestBody BookCreationDto bookCreateDto) {
+    public ResponseEntity<BookDto> updateBook(@PathVariable Integer id, @RequestBody BookCreationDto bookCreateDto) {
         return bookService.updateBook(id, bookCreateDto)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable Integer id) {
         if (bookService.deleteBook(id)) {
             return ResponseEntity.noContent().build();
         } else {

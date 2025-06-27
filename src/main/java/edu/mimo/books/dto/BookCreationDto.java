@@ -4,8 +4,7 @@ public class BookCreationDto {
     
     private String isbn;
     private String title;
-    private String authorName;
-    private String country;
+    private Integer authorId;
     private String originalLanguage;
     private Integer year;
 
@@ -22,21 +21,7 @@ public class BookCreationDto {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
+    
     public String getOriginalLanguage() {
         return originalLanguage;
     }
@@ -49,5 +34,11 @@ public class BookCreationDto {
     }
     public void setYear(Integer year) {
         this.year = year;
+    }
+    public Integer getAuthorId() {
+        return authorId;
+    }
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 } 
