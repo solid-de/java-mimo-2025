@@ -1,6 +1,7 @@
 package edu.mimo.books.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.mimo.books.dto.BookCreationDto;
 import edu.mimo.books.dto.BookDto;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
+
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
@@ -27,7 +29,8 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.findAll();
         List<BookDto> dtos = new ArrayList<>();
         for (Book book : books) {
-            dtos.add(bookMapper.toDto(book));
+            BookDto dto = bookMapper.toDto(book);
+            dtos.add(dto);
         }
         return dtos;
     }
@@ -35,10 +38,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<BookDto> getBookById(Long id) {
         return bookRepository.findById(id)
-                    .map(bookMapper::toDto);
+                    .map(entity -> bookMapper.toDto(entity));
     }
 
     @Override
+    @Transactional
     public BookDto createBook(BookCreationDto bookCreateDto) {
         Book book = bookMapper.toEntity(bookCreateDto);
         Book saved = bookRepository.save(book);
@@ -47,7 +51,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<BookDto> updateBook(Long id, BookCreationDto bookCreateDto) {
-        return bookRepository.findById(id).map(existing -> {
+        return bookRepository.findById(id)
+        .map(existing -> {
             Book toUpdate = bookMapper.toEntity(bookCreateDto);
             toUpdate.setId(id);
             Book saved = bookRepository.save(toUpdate);
