@@ -53,4 +53,5 @@ INSERT INTO books (isbn, title, original_language, pub_year, price, author_id) V
 ('978-0374105839', 'The Argumentative Indian', 'English', 2005, 10, (SELECT id FROM authors WHERE name = 'Amartya Sen')),
 ('978-0061120084', 'To Kill a Mockingbird', 'English', 1960, 10, (SELECT id FROM authors WHERE name = 'Harper Lee')),
 ('978-0143039433', 'The Grapes of Wrath', 'English', 1939, 10, (SELECT id FROM authors WHERE name = 'John Steinbeck'));
+
 */

@@ -24,17 +24,21 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable Integer id) {
+    public ResponseEntity<BookDto> getBookById(@PathVariable("id") Integer id) {
         return bookService.getBookById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(bookDto -> ResponseEntity.ok(bookDto))
+                .orElseGet(() -> ResponseEntity.notFound()
+                        .header("reason", "book not found")
+                        .build()
+                );
     }
 
     @PostMapping
     public ResponseEntity<BookDto> createBook(@RequestBody BookCreationDto bookCreateDto) {
         return bookService.createBook(bookCreateDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(bookDto -> ResponseEntity.ok(bookDto))
+                .orElseGet(() -> ResponseEntity.notFound().build()                        
+                );
     }
 
     @PutMapping("/{id}")

@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.mimo.books.dto.BookCreationDto;
 import edu.mimo.books.dto.BookDto;
+import edu.mimo.books.entity.Author;
 import edu.mimo.books.entity.Book;
 import edu.mimo.books.mapper.BookMapper;
 import edu.mimo.books.repository.AuthorRepository;
@@ -41,6 +42,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> byAuthorId(Integer authorId) {
+        List<Book> books = bookRepository.findByAuthorId(authorId);
+        List<BookDto> dtos = new ArrayList<>();
+        for (Book book : books) {
+            BookDto dto = bookMapper.toDto(book);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    @Override
     public Optional<BookDto> getBookById(Integer id) {
         return bookRepository.findById(id)
                     .map(entity -> bookMapper.toDto(entity));
@@ -63,6 +75,9 @@ public class BookServiceImpl implements BookService {
         .map(existing -> {
             Book toUpdate = bookMapper.toEntity(bookCreateDto);
             toUpdate.setId(id);
+            Author author = authorRepository.findById(bookCreateDto.getAuthorId())
+            .orElse(existing.getAuthor());
+            toUpdate.setAuthor(author);
             Book saved = bookRepository.save(toUpdate);
             return bookMapper.toDto(saved);
         });

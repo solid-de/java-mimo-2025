@@ -15,15 +15,18 @@ import edu.mimo.books.dto.AuthorDto;
 import edu.mimo.books.dto.BookCreationDto;
 import edu.mimo.books.dto.BookDto;
 import edu.mimo.books.service.AuthorService;
+import edu.mimo.books.service.BookService;
 
 @RestController
 @RequestMapping("/authors")
 public class AuthorController {
     
     private final AuthorService authorService;
+    private final BookService bookService;
 
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService, BookService bookService) {
         this.authorService = authorService;
+        this.bookService = bookService;
     }
 
     @GetMapping
@@ -36,6 +39,11 @@ public class AuthorController {
         return authorService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/books")
+    public List<BookDto> authorBooks(@PathVariable Integer id) {
+        return bookService.byAuthorId(id);
     }
 
     @PostMapping

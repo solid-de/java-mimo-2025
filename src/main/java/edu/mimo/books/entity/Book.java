@@ -17,7 +17,7 @@ public class Book implements Product {
     @Column(name = "pub_year")
     private Integer year;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
 

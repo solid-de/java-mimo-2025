@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import edu.mimo.books.dto.AuthorSummaryDto;
 import edu.mimo.books.dto.BookCreationDto;
 import edu.mimo.books.dto.BookDto;
+import edu.mimo.books.entity.Author;
 import edu.mimo.books.entity.Book;
 
 @Component
@@ -27,7 +28,9 @@ public class BookMapper {
         dto.setTitle(book.getTitle());
         dto.setOriginalLanguage(book.getOriginalLanguage());
         dto.setYear(book.getYear());
-        AuthorSummaryDto author = Optional.ofNullable(book.getAuthor())
+
+        Author theAuthor = book.getAuthor();
+        AuthorSummaryDto author = Optional.ofNullable(theAuthor)
         .map(a -> new AuthorSummaryDto(a.getId(), a.getName()))
         .orElse(AuthorSummaryDto.UNKNOWN_AUTHOR);
 

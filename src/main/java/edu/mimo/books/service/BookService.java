@@ -14,4 +14,7 @@ public interface BookService {
     Optional<BookDto> updateBook(Integer id, BookCreationDto bookCreateDto);
     boolean deleteBook(Integer id);
     Map<String, List<BookDto>> groupBooksByLanguage();
+
+
+     List<BookDto> byAuthorId(Integer authorId);
 } 
